@@ -20,7 +20,8 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           eval $(ssh-agent -s)
-          ssh-add ~/.ssh/id_ed25519 || echo "Nie dodalo klucza"
+          export SSH_AUTH_SOCK=$(ls /tmp/ssh-*/agent.*)
+          ssh-add ~/.ssh/id_ed25519
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v2 # Użycie wtyczki do logowania w GHCR
