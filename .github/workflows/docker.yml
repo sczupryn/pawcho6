@@ -13,9 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2 # Krok, który umożliwia sprawdzenie kodu w repozytorium
 
-      - name: Check SSH_AUTH_SOCK
-        run: echo $SSH_AUTH_SOCK
-
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
@@ -23,6 +20,7 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           eval $(ssh-agent -s)
+          echo $SSH_AUTH_SOCK
           ssh-add ~/.ssh/id_ed25519
 
       - name: Log in to GitHub Container Registry
