@@ -4,18 +4,17 @@ on:
   push:
     branches:
       - main # Workflow uruchomi się, gdy będą zmiany na gałęzi main
-  pull_request:
-    branches:
-      - main # Workflow uruchomi się, gdy będzie pull request do gałęzi main
 
 jobs:
   build:
     runs-on: ubuntu-latest # Wybór maszyny do uruchomienia
 
     steps:
-      # Definicja zadań
       - name: Checkout code
         uses: actions/checkout@v2 # Krok, który umożliwia sprawdzenie kodu w repozytorium
+
+      - name: Check SSH_AUTH_SOCK
+        run: echo $SSH_AUTH_SOCK
 
       - name: Set up SSH
         run: |
@@ -23,9 +22,6 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan github.com >> ~/.ssh/known_hosts
-
-      - name: Set up SSH agent
-        run: |
           eval $(ssh-agent -s)
           ssh-add ~/.ssh/id_ed25519
 
