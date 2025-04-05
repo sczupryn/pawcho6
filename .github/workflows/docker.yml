@@ -34,5 +34,5 @@ jobs:
       - name: Build and push Docker image
         # Budowa obrazu z tagiem lab6 i wysłanie go do ghcr
         run: |
-          docker build -t ghcr.io/${{ github.repository }}/pawcho6:lab6 .  
-          docker push ghcr.io/${{ github.repository }}/pawcho6:lab6
+          DOCKER_BUILDKIT=1 docker build --ssh default -t ghcr.io/${{ github.repository }}:lab6 .
+          docker push ghcr.io/${{ github.repository }}:lab6
