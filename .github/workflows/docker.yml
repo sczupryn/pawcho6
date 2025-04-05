@@ -22,7 +22,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          DOCKER_BUILDKIT=1 docker build --ssh default -t ghcr.io/${{ github.repository }}:lab6 .
+          docker build -t ghcr.io/${{ github.repository }}:lab6 .
 
       - name: Push Docker image
         run: |
